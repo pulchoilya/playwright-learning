@@ -4,6 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "npx playwright test",
+    "setup": "playwright test --project=setup",
+    "test:qauto": "playwright test --project=qauto",
     "lint": "eslint tests --ext .ts,.js --fix"
   },
   "repository": {

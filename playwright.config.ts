@@ -39,7 +39,9 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: "qauto",
+      name: "login",
+      testDir: "./tests/setup",
+      testMatch: "**/login.setup.spec.ts",
       use: {
         ...devices["Desktop Chrome"],
         baseURL: process.env.BASE_URL,
@@ -48,6 +50,23 @@ export default defineConfig({
           password: process.env.USER_PASS!,
         },
       },
+      retries: 0,
+    },
+    {
+      name: "example",
+      testDir: "./tests/storage",
+      testMatch: "**/*.spec.ts",
+      use: {
+        ...devices["Desktop Chrome"],
+        storageState: "session-storage.json",
+        baseURL: process.env.BASE_URL,
+        httpCredentials: {
+          username: process.env.USER_NAME!,
+          password: process.env.USER_PASS!,
+        },
+      },
+      dependencies: ["login"],
+      workers: 1,
     },
 
     // {
