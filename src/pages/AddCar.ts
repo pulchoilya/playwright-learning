@@ -30,6 +30,10 @@ export class AddCar extends BasePage {
     await this._addBtn.click();
   }
 
+  get page(): Page {
+    return this._page;
+  }
+
   async verifyCarExists(brand: string, model: string, mileage: string) {
     const carCard = this._page
       .locator(".panel-page_content")
