@@ -10,32 +10,35 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    environment: "GitHub Actions" 
     container:
       image: mcr.microsoft.com/playwright:v1.39.0-jammy
 
     steps:
-      # 1. Checkout code
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2. Setup Node.js
       - uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      # 3. Install npm dependencies
       - name: Install dependencies
         run: npm ci
 
-      # 4. Install Playwright browsers
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      # 5. Run all tests 
+      - name: Set environment variables
+        run: |
+          echo "BASE_URL=${{ secrets.BASE_URL }}" >> $GITHUB_ENV
+          echo "USER_NAME=${{ secrets.USER_NAME }}" >> $GITHUB_ENV
+          echo "USER_PASS=${{ secrets.USER_PASS }}" >> $GITHUB_ENV
+          echo "USER_EMAIL=${{ secrets.USER_EMAIL }}" >> $GITHUB_ENV
+          echo "USER_PASSWORD=${{ secrets.USER_PASSWORD }}" >> $GITHUB_ENV
+
       - name: Run Playwright tests
         run: npx playwright test
 
-      # 6. Upload HTML report
       - name: Upload Playwright HTML report
         uses: actions/upload-artifact@v4
         with:
