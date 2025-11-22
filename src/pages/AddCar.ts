@@ -34,13 +34,13 @@ export class AddCar extends BasePage {
     return this._page;
   }
 
-  async verifyCarExists(brand: string, model: string, mileage: string) {
-    const carCard = this._page
-      .locator(".panel-page_content")
-      .filter({ hasText: `${brand} ${model}` });
-    await expect(carCard.locator(".car_name")).toHaveText(`${brand} ${model}`);
-    await expect(carCard.locator('input[formcontrolname="miles"]')).toHaveValue(
-      mileage,
-    );
-  }
+  // // async verifyCarExists(brand: string, model: string, mileage: string) {
+  // //   const carCard = this._page
+  // //     .locator(".panel-page_content")
+  // //     .filter({ hasText: `${brand} ${model}` });
+  // //   await expect(carCard.locator(".car_name")).toHaveText(`${brand} ${model}`);
+  // //   await expect(carCard.locator('input[formcontrolname="miles"]')).toHaveValue(
+  // //     mileage,
+  // //   );
+  // }
 }

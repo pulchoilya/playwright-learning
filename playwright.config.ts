@@ -68,6 +68,17 @@ export default defineConfig({
       dependencies: ["login"],
       workers: 1,
     },
+    {
+      name: "firefox",
+      use: {
+        ...devices["Desktop Firefox"],
+        baseURL: process.env.BASE_URL,
+        httpCredentials: {
+          username: process.env.USER_NAME!,
+          password: process.env.USER_PASS!,
+        },
+      },
+    },
 
     // {
     //   name: "firefox",
