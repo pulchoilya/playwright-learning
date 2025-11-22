@@ -1,0 +1,38 @@
+name: Playwright Tests in Docker
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout code
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      # 2. Build Docker image (твій Dockerfile)
+      - name: Build Docker image
+        run: |
+          docker build -t pw-tests .
+
+      # 3. Run Playwright tests inside container
+      - name: Run tests inside Docker
+        run: |
+          docker run --rm \
+            -v "$PWD:/playwright-tests" \
+            -w /playwright-tests \
+            pw-tests \
+            npx playwright test --project=firefox
+
+      # 4. Upload Playwright Report (HTML)
+      - name: Upload HTML report
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
