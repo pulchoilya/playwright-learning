@@ -12,26 +12,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout code
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Build Docker image (твій Dockerfile)
       - name: Build Docker image
-        run: |
-          docker build -t pw-tests .
+        run: docker build -t pw-tests .
 
-      # 3. Run Playwright tests inside container
-      - name: Run tests inside Docker
+      - name: Run Playwright tests inside Docker
         run: |
           docker run --rm \
-            -v "$PWD:/playwright-tests" \
+            -v "$(pwd):/playwright-tests" \
             -w /playwright-tests \
-            pw-tests \
-            npx playwright test --project=firefox
+            pw-tests
 
-      # 4. Upload Playwright Report (HTML)
-      - name: Upload HTML report
+      - name: Upload Playwright HTML report
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report
